@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fcf9ef">
+<meta name="description" content="SaveBite — рятуй їжу, економ гроші. Знайди набори зі знижками у своєму місті.">
+<title>SaveBite — Рятуй їжу. Економ гроші.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--bg:#fcf9ef;--surface:#fffef9;--ink:#163d2a;--muted:#687b6c;--line:#e5e0d0;--green:#236b3d;--green2:#438a4d;--lime:#a8cf55;--pale:#edf5df;--sun:#f6bd54;--danger:#b94331;--shadow:0 12px 34px #25482b0d;box-sizing:border-box}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Nunito,system-ui,-apple-system,"Segoe UI",sans-serif}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+header{position:sticky;top:0;z-index:5;background:#fcf9eff0;backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar{max-width:1120px;margin:auto;min-height:76px;padding:12px 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.brand{display:inline-flex;align-items:center;gap:9px;color:var(--ink);font-size:25px;font-weight:900;letter-spacing:-1px;text-decoration:none;white-space:nowrap}
+.brand-mark{width:38px;height:38px;border-radius:13px;background:var(--green);display:grid;place-items:center;color:#fff;font-size:22px}
+.brand em{font-style:normal;color:var(--green2)}
+nav{display:flex;gap:5px;margin-left:auto;overflow-x:auto;max-width:100%}
+.navbtn{border:0;background:transparent;color:var(--muted);font-weight:800;border-radius:999px;padding:9px 13px;white-space:nowrap}
+.navbtn[aria-current="page"]{background:var(--green);color:white}
+main{max-width:1120px;margin:auto;padding:0 20px 55px}
+section[hidden]{display:none!important}
+.hero{position:relative;overflow:hidden;margin:26px 0 22px;padding:clamp(26px,5vw,54px);border-radius:30px;background:linear-gradient(125deg,#e8f2d9 0%,#f8f0d9 62%,#fbe7c4 100%);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(180px,.7fr);align-items:center;gap:20px}
+.hero:after{content:"";position:absolute;width:280px;height:280px;border:42px solid #ffffff55;border-radius:50%;right:-80px;bottom:-150px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;width:fit-content;padding:7px 12px;border-radius:999px;background:#ffffffb8;color:var(--green);font-size:13px;font-weight:900}
+.dot{width:8px;height:8px;background:var(--green2);border-radius:50%}
+h1{font-size:clamp(38px,6.4vw,66px);line-height:.99;letter-spacing:-2px;margin:18px 0 16px;font-weight:900;max-width:12ch}
+h1 span{color:var(--green2)}
+.hero p{color:#536b58;max-width:55ch;font-size:18px;margin:0}
+.hero-art{position:relative;z-index:1;display:grid;place-items:center;min-height:180px}
+.food-orbit{width:min(240px,100%);aspect-ratio:1;border-radius:50%;background:#ffffff75;display:grid;place-items:center;font-size:100px;box-shadow:inset 0 0 0 1px #ffffff90;transform:rotate(-5deg)}
+.hero-note{position:absolute;bottom:12px;right:0;background:#fffdf5;border:1px solid #e5ddc8;border-radius:16px;padding:10px 14px;font-size:13px;font-weight:900;box-shadow:var(--shadow);transform:rotate(4deg)}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:28px 0 14px}
+h2{font-size:clamp(25px,4vw,35px);line-height:1.1;letter-spacing:-.8px;margin:0}
+.sub{color:var(--muted);margin:5px 0 0}
+.toolbar{display:grid;grid-template-columns:minmax(200px,1.5fr) repeat(3,minmax(130px,1fr));gap:10px;margin:16px 0}
+.field{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:0 12px;min-width:0}
+.field input,.field select{width:100%;min-width:0;border:0;background:transparent;padding:12px 0;color:var(--ink);outline:none}
+.field select{cursor:pointer}
+.search-icon{font-size:18px}
+.quick-filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.pill{border:1px solid var(--line);background:var(--surface);padding:8px 14px;border-radius:999px;color:var(--ink);font-weight:800}
+.pill[aria-pressed="true"]{background:var(--pale);border-color:#a8c98c;color:var(--green)}
+.resultsline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:14px;margin:8px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px);box-shadow:0 16px 38px #25482b15}
+.picture{height:156px;position:relative;display:grid;place-items:center;font-size:70px}
+.discount{position:absolute;top:12px;left:12px;background:var(--green);color:#fff;border-radius:999px;padding:5px 11px;font-size:13px;font-weight:900}
+.fav{position:absolute;top:10px;right:10px;width:40px;height:40px;border:1px solid #ffffffa8;background:#fffdf0e8;border-radius:50%;font-size:21px;color:#5d705e;display:grid;place-items:center}
+.fav[aria-pressed="true"]{color:#c63f4c;background:#fff}
+.cardbody{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.meta{color:var(--muted);font-size:13px;font-weight:800}
+.card h3{font-size:19px;line-height:1.2;margin:0}
+.description{margin:0;color:var(--muted);font-size:14px}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:12px;font-weight:800;background:var(--pale);border-radius:999px;padding:3px 9px}
+.pickup{font-size:13px;font-weight:800;color:var(--muted)}
+.cardbottom{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-top:auto;padding-top:8px}
+.price{font-size:27px;font-weight:900;line-height:1.05;white-space:nowrap}
+.oldprice{display:block;color:#899287;font-size:13px;font-weight:700;text-decoration:line-through;margin-bottom:4px}
+.btn{border:0;border-radius:13px;padding:11px 15px;background:var(--green);color:white;font-weight:900}
+.btn:hover{background:#174e2c}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.secondary{background:var(--pale);color:var(--green)}
+.btn.secondary:hover{background:#dcebc8}
+.btn.danger{background:transparent;color:var(--danger);border:1px solid var(--line)}
+.empty{border:1.5px dashed #d6d1bf;border-radius:22px;padding:34px 18px;text-align:center;color:var(--muted);background:#fffdf8}
+.empty .big{font-size:40px}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:38px 0 12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px}
+.stepnum{display:grid;place-items:center;width:36px;height:36px;border-radius:12px;background:var(--pale);color:var(--green);font-weight:900;margin-bottom:12px}
+.step b{display:block;font-size:18px}
+.step p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.order{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:15px;margin:10px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px}
+.orderemoji{font-size:36px}
+.orderinfo{flex:1;min-width:180px}
+.orderinfo b{display:block}
+.orderinfo small{color:var(--muted)}
+.code{background:#fff0ce;border-radius:10px;padding:7px 12px;font-weight:900;letter-spacing:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat{border-radius:20px;padding:22px;background:var(--green);color:#fff}
+.stat:nth-child(2){background:var(--green2)}
+.stat:nth-child(3){background:#f6bd54;color:#49360f}
+.stat b{display:block;font-size:38px;line-height:1.1}
+.notice{font-size:13px;color:var(--muted);margin-top:12px}
+.partner{margin-top:34px;background:var(--pale);border-radius:24px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.partner p{color:var(--muted);margin:7px 0 0}
+.toast{position:fixed;z-index:10;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:.2s;background:var(--ink);color:white;border-radius:14px;padding:12px 18px;max-width:92vw;text-align:center;font-weight:800;box-shadow:var(--shadow)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);padding:25px 20px 35px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:850px){.toolbar{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{grid-template-columns:minmax(0,1fr) 190px}.food-orbit{font-size:76px}.how{grid-template-columns:1fr}}
+@media(max-width:560px){.topbar{padding:10px 14px;gap:10px}.brand{font-size:23px}.brand-mark{width:34px;height:34px}nav{order:2;width:100%;margin:0}main{padding:0 14px 38px}.hero{grid-template-columns:1fr;margin-top:16px;padding:25px 21px;border-radius:24px;gap:4px}.hero-art{min-height:115px;justify-content:end;margin-top:-4px}.food-orbit{width:118px;font-size:56px;margin-right:18px}.hero-note{right:8px;bottom:0;font-size:11px}.hero p{font-size:16px}h1{font-size:44px}.toolbar{grid-template-columns:1fr 1fr;gap:8px}.field:first-child{grid-column:1/-1}.grid{grid-template-columns:1fr;gap:13px}.picture{height:145px}.cardbottom .btn{padding:11px 12px}.stats{grid-template-columns:1fr}.stat{padding:18px}.stat b{font-size:32px}.section-head{margin-top:25px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <a class="brand" href="#" id="homeLink" aria-label="SaveBite — на головну"><span class="brand-mark" aria-hidden="true">🍃</span><span>Save<em>Bite</em></span></a>
+    <nav aria-label="Головна навігація">
+      <button class="navbtn" data-page="catalog" aria-current="page">Каталог</button>
+      <button class="navbtn" data-page="favorites">♡ Обране <span id="favCount"></span></button>
+      <button class="navbtn" data-page="orders">Мої замовлення <span id="orderCount"></span></button>
+      <button class="navbtn" data-page="eco">Еко-статистика</button>
+    </nav>
+  </div>
+</header>
+<main>
+<section id="catalog">
+  <div class="hero">
+    <div>
+      <div class="eyebrow"><span class="dot"></span><span id="heroStatus">Розумні покупки — менше відходів</span></div>
+      <h1>Рятуй їжу.<br><span>Економ гроші.</span></h1>
+      <p>Улюблені смаки за приємними цінами. Знаходь набори від кафе, пекарень і магазинів, які хочуть, щоб їжа не пропадала.</p>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="food-orbit">🥐🍓</div><div class="hero-note">Смачно. Вигідно. Еко.</div></div>
+  </div>
+  <div class="section-head"><div><h2>Знайди свій набір</h2><p class="sub">Демо-пропозиції для знайомства із SaveBite</p></div></div>
+  <div class="toolbar" role="search">
+    <label class="field"><span class="search-icon" aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Пошук їжі або закладу…" aria-label="Пошук їжі або закладу"></label>
+    <label class="field"><span aria-hidden="true">⌖</span><select id="cityFilter" aria-label="Місто"><option value="">Усі міста</option><option>Одеса</option><option>Київ</option><option>Львів</option><option>Харків</option></select></label>
+    <label class="field"><span aria-hidden="true">☷</span><select id="typeFilter" aria-label="Тип закладу"><option value="">Усі заклади</option><option>Пекарня</option><option>Кафе</option><option>Ресторан</option><option>Супермаркет</option></select></label>
+    <label class="field"><span aria-hidden="true">↕</span><select id="sortFilter" aria-label="Сортування"><option value="recommended">Рекомендовані</option><option value="cheap">Спочатку дешевші</option><option value="discount">Найбільша знижка</option><option value="left">Найбільше наборів</option></select></label>
+  </div>
+  <div class="quick-filters" aria-label="Швидкі фільтри">
+    <button class="pill" data-quick="all" aria-pressed="true">Усі набори</button>
+    <button class="pill" data-quick="discount" aria-pressed="false">🔥 Знижка від 60%</button>
+    <button class="pill" data-quick="vegetarian" aria-pressed="false">🥬 Вегетаріанське</button>
+    <button class="pill" data-quick="favorites" aria-pressed="false">♡ Лише обране</button>
+  </div>
+  <div class="resultsline"><span id="resultCount" aria-live="polite">Завантажуємо набори…</span><button class="btn secondary" id="resetFilters" type="button">Скинути фільтри</button></div>
+  <div class="grid" id="offers"></div>
+  <div class="how">
+    <div class="step"><div class="stepnum">1</div><b>Обери набір</b><p>Знайди цікаву пропозицію та перевір місто і час видачі.</p></div>
+    <div class="step"><div class="stepnum">2</div><b>Забронюй</b><p>У демоверсії натискання створить тестове замовлення з кодом.</p></div>
+    <div class="step"><div class="stepnum">3</div><b>Забери у закладі</b><p>У реальному сервісі код підтверджуватиме справжнє бронювання.</p></div>
+  </div>
+  <div class="partner"><div><h2>Маєш заклад?</h2><p>Допоможи хорошій їжі знайти свого покупця.</p></div><button class="btn" data-page="partner">Дізнатися про партнерство</button></div>
+</section>
+<section id="favorites" hidden>
+  <div class="section-head"><div><h2>Обране ♡</h2><p class="sub">Набори, які ти зберегла на цьому пристрої.</p></div></div>
+  <div class="grid" id="favoriteOffers"></div>
+</section>
+<section id="orders" hidden>
+  <div class="section-head"><div><h2>Мої замовлення</h2><p class="sub">Тестові бронювання зберігаються в цьому браузері.</p></div></div>
+  <div id="orderList"></div>
+</section>
+<section id="eco" hidden>
+  <div class="section-head"><div><h2>Твій еко-внесок 🌱</h2><p class="sub">Оцінка на основі тестових бронювань на цьому пристрої.</p></div></div>
+  <div class="stats"><div class="stat"><b id="sPort">0</b>наборів заброньовано</div><div class="stat"><b id="sKg">0 кг</b>орієнтовно їжі врятовано</div><div class="stat"><b id="sMoney">0 ₴</b>різниця з початковою ціною</div></div>
+  <p class="notice">Розрахунок демонстраційний: для одного набору умовно беремо 0,6 кг. Економія — різниця між вказаною початковою ціною та ціною набору, а не підтверджена фактична економія.</p>
+  <div class="empty"><div class="big">🌍</div><b>Кожен набір має значення</b><p>У цій версії немає спільної бази даних, тому ми не показуємо вигадані загальні цифри для всіх користувачів.</p></div>
+</section>
+<section id="partner" hidden>
+  <div class="section-head"><div><h2>Для закладу 🤝</h2><p class="sub">Зменшуй харчові відходи та знаходь нових клієнтів.</p></div></div>
+  <div class="how"><div class="step"><div class="stepnum">✓</div><b>Менше втрат</b><p>Запропонуй набори з продуктів, які варто продати сьогодні.</p></div><div class="step"><div class="stepnum">✓</div><b>Нові гості</b><p>Познайом людей із твоєю пекарнею, кафе чи магазином.</p></div><div class="step"><div class="stepnum">✓</div><b>Просто почати</b><p>У повній версії ти зможеш керувати цінами, кількістю та часом видачі.</p></div></div>
+  <div class="empty"><div class="big">📩</div><b>Заявка партнера ще не підключена</b><p>Для справжнього надсилання заявок потрібні сервер або форма зовнішнього сервісу. Не вводь сюди приватні контактні дані — ця демоверсія їх не надсилає.</p><button class="btn secondary" data-page="catalog">Повернутися до каталогу</button></div>
+</section>
+</main>
+<footer>SaveBite · Смачні пропозиції. Менше відходів. <br>Демонстраційний проєкт · Пропозиції не є реальними бронюваннями.</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+"use strict";
+const OFFERS=[
+{id:1,name:"Супермаркет «Свіжо»",type:"Супермаркет",city:"Одеса",set:"Набір фруктів і випічки",description:"Сезонні фрукти та свіжа випічка на сьогодні.",tags:["фрукти","випічка"],left:2,now:250,old:900,emoji:"🍎",bg:"#fff0cf",win:"20:00–21:30"},
+{id:2,name:"Пекарня «Ранок»",type:"Пекарня",city:"Київ",set:"2 круасани, кава та десерт",description:"Невеликий набір для смачного вечора.",tags:["сніданок","вегетаріанське"],left:3,now:150,old:500,emoji:"🥐",bg:"#f7e6ce",win:"19:00–20:00"},
+{id:3,name:"Кафе «Зерно»",type:"Кафе",city:"Львів",set:"Сендвіч, салат і напій",description:"Збалансований набір для швидкого перекусу.",tags:["обід","швидко"],left:5,now:199,old:650,emoji:"🥪",bg:"#eaf2d9",win:"18:30–20:00"},
+{id:4,name:"Ресторан «Мама»",type:"Ресторан",city:"Харків",set:"Гарячий обід із двох страв",description:"Теплий ситний обід за вигідною ціною.",tags:["гаряче","обід"],left:4,now:250,old:750,emoji:"🍲",bg:"#f9dfd2",win:"21:00–22:00"},
+{id:5,name:"Пекарня «Теплий хліб»",type:"Пекарня",city:"Одеса",set:"Булочки, багет і печиво",description:"Випічка наприкінці дня — усе в одному наборі.",tags:["випічка","вегетаріанське"],left:6,now:120,old:400,emoji:"🥖",bg:"#f6e5c7",win:"19:30–21:00"},
+{id:6,name:"Кафе «Зелена виделка»",type:"Кафе",city:"Київ",set:"Овочевий боул і хумус",description:"Рослинний обід для тих, хто любить овочі.",tags:["вегетаріанське","обід"],left:2,now:180,old:450,emoji:"🥗",bg:"#e8f1d8",win:"18:00–19:30"}
+];
+const $=id=>document.getElementById(id);
+const STORE={orders:"savebite_demo_orders_v2",favorites:"savebite_demo_favorites_v2"};
+function read(key,fallback){try{const x=JSON.parse(localStorage.getItem(key));return x===null?fallback:x}catch{return fallback}}
+let orders=read(STORE.orders,[]).filter(o=>OFFERS.some(f=>f.id===o.id));
+let favorites=read(STORE.favorites,[]).filter(id=>OFFERS.some(f=>f.id===id));
+let activePage="catalog",quick="all";
+const baseLeft=Object.fromEntries(OFFERS.map(o=>[o.id,o.left]));
+function save(){try{localStorage.setItem(STORE.orders,JSON.stringify(orders));localStorage.setItem(STORE.favorites,JSON.stringify(favorites))}catch{toast("Браузер не дозволив зберегти дані. Перевір налаштування сховища.")}}
+function money(n){return n.toLocaleString("uk-UA")+" ₴"}
+function discount(o){return Math.round((1-o.now/o.old)*100)}
+function available(o){return Math.max(0,baseLeft[o.id]-orders.filter(r=>r.id===o.id).length)}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("on"),2600)}
+function go(page){activePage=page;["catalog","favorites","orders","eco","partner"].forEach(id=>$(id).hidden=id!==page);document.querySelectorAll("[data-page]").forEach(b=>{if(b.classList.contains("navbtn")){if(b.dataset.page===page)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")}});window.scrollTo({top:0,behavior:"smooth"});render()}
+function offerCard(o){const fav=favorites.includes(o.id),left=available(o);return `<article class="card"><div class="picture" style="background:${o.bg}"><span aria-hidden="true">${o.emoji}</span><span class="discount">−${discount(o)}%</span><button class="fav" type="button" data-fav="${o.id}" aria-label="${fav?"Видалити з обраного":"Додати в обране"}: ${o.name}" aria-pressed="${fav}">${fav?"♥":"♡"}</button></div><div class="cardbody"><div class="meta">${o.type} · ${o.city}</div><h3>${o.name}</h3><p class="description">${o.set} — ${o.description}</p><div class="tags">${o.tags.map(t=>`<span class="tag">#${t}</span>`).join("")}</div><div class="pickup">Забрати сьогодні: ${o.win}</div><div class="cardbottom"><div><span class="oldprice">${money(o.old)}</span><div class="price">${money(o.now)}</div></div><button class="btn" type="button" data-book="${o.id}" ${left===0?"disabled":""}>${left?"Забронювати":"Немає"}</button></div><div class="meta">${left?"Залишилось наборів: "+left:"Усі набори заброньовано (демо)"}</div></div></article>`}
+function bindCards(root){root.querySelectorAll("[data-fav]").forEach(b=>b.onclick=()=>toggleFavorite(Number(b.dataset.fav)));root.querySelectorAll("[data-book]").forEach(b=>b.onclick=()=>reserve(Number(b.dataset.book)))}
+function filtered(){const q=$("search").value.trim().toLocaleLowerCase("uk");const city=$("cityFilter").value,type=$("typeFilter").value,sort=$("sortFilter").value;let a=OFFERS.filter(o=>{const text=[o.name,o.type,o.city,o.set,o.description,...o.tags].join(" ").toLocaleLowerCase("uk");return(!q||text.includes(q))&&(!city||o.city===city)&&(!type||o.type===type)&&(quick!=="discount"||discount(o)>=60)&&(quick!=="vegetarian"||o.tags.includes("вегетаріанське"))&&(quick!=="favorites"||favorites.includes(o.id))});if(sort==="cheap")a.sort((x,y)=>x.now-y.now);if(sort==="discount")a.sort((x,y)=>discount(y)-discount(x));if(sort==="left")a.sort((x,y)=>available(y)-available(x));return a}
+function renderCatalog(){const list=filtered();$("offers").innerHTML=list.length?list.map(offerCard).join(""):`<div class="empty" style="grid-column:1/-1"><div class="big">🔎</div><b>Нічого не знайдено</b><p>Спробуй змінити пошук або скинути фільтри.</p><button class="btn secondary" id="emptyReset">Скинути фільтри</button></div>`;$("resultCount").textContent=`Знайдено наборів: ${list.length}`;bindCards($("offers"));const r=$("emptyReset");if(r)r.onclick=resetFilters}
+function renderFavorites(){const list=OFFERS.filter(o=>favorites.includes(o.id));$("favoriteOffers").innerHTML=list.length?list.map(offerCard).join(""):`<div class="empty" style="grid-column:1/-1"><div class="big">♡</div><b>Тут поки порожньо</b><p>Натисни сердечко на картці набору, щоб зберегти його.</p><button class="btn secondary" id="browseBtn">До каталогу</button></div>`;bindCards($("favoriteOffers"));const b=$("browseBtn");if(b)b.onclick=()=>go("catalog")}
+function toggleFavorite(id){favorites=favorites.includes(id)?favorites.filter(x=>x!==id):[...favorites,id];save();render();toast(favorites.includes(id)?"Додано до обраного":"Видалено з обраного")}
+function reserve(id){const o=OFFERS.find(x=>x.id===id);if(!o||available(o)<=0)return;const code=String(Math.floor(1000+Math.random()*9000));orders.push({id,code,uid:Date.now().toString(36)+Math.random().toString(36).slice(2,7),created:new Date().toISOString()});save();render();toast("Демо-бронювання створено. Код: "+code)}
+function cancel(uid){orders=orders.filter(o=>o.uid!==uid);save();render();toast("Демо-бронювання скасовано")}
+function renderOrders(){const el=$("orderList");if(!orders.length){el.innerHTML=`<div class="empty"><div class="big">🧺</div><b>Бронювань поки немає</b><p>Знайди набір у каталозі та створи тестове бронювання.</p><button class="btn secondary" id="ordersBrowse">Відкрити каталог</button></div>`;$("ordersBrowse").onclick=()=>go("catalog");return}el.innerHTML=orders.map(r=>{const o=OFFERS.find(x=>x.id===r.id);return `<div class="order"><div class="orderemoji" aria-hidden="true">${o.emoji}</div><div class="orderinfo"><b>${o.name}</b>${o.set}<br><small>${o.city} · ${o.win} · ${money(o.now)} · тестове замовлення</small></div><div class="code" aria-label="Демо-код">${r.code}</div><button class="btn danger" data-cancel="${r.uid}">Скасувати</button></div>`}).join("");el.querySelectorAll("[data-cancel]").forEach(b=>b.onclick=()=>cancel(b.dataset.cancel))}
+function renderStats(){let saved=0;orders.forEach(r=>{const o=OFFERS.find(x=>x.id===r.id);saved+=o.old-o.now});$("sPort").textContent=orders.length;$("sKg").textContent=(orders.length*.6).toLocaleString("uk-UA",{minimumFractionDigits:1,maximumFractionDigits:1})+" кг";$("sMoney").textContent=money(saved)}
+function renderCounts(){$("favCount").textContent=favorites.length?`(${favorites.length})`:"";$("orderCount").textContent=orders.length?`(${orders.length})`:""}
+function render(){renderCounts();renderCatalog();renderFavorites();renderOrders();renderStats();document.querySelectorAll("[data-quick]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.quick===quick?"true":"false"))}
+function resetFilters(){$("search").value="";$("cityFilter").value="";$("typeFilter").value="";$("sortFilter").value="recommended";quick="all";render()}
+$("search").addEventListener("input",renderCatalog);["cityFilter","typeFilter","sortFilter"].forEach(id=>$(id).addEventListener("change",renderCatalog));
+document.querySelectorAll("[data-quick]").forEach(b=>b.onclick=()=>{quick=b.dataset.quick;render()});
+$("resetFilters").onclick=resetFilters;
+document.querySelectorAll(".navbtn").forEach(b=>b.onclick=()=>go(b.dataset.page));
+document.querySelectorAll("[data-page]:not(.navbtn)").forEach(b=>b.onclick=()=>go(b.dataset.page));
+$("homeLink").onclick=e=>{e.preventDefault();go("catalog")};
+render();
+</script>
+</body>
+</html>
